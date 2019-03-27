@@ -8,11 +8,16 @@
             label="地名"
             prop="address"
             :rules="[
-              { required: true, message: '地名不能为空'},
               { type: 'string', message: '地名必须为字符串'}
             ]"
             >
-            <el-input type="address" v-model.number="numberValidateForm.address" autocomplete="off"></el-input>
+            <el-autocomplete
+              class="inline-input"
+              v-model="numberValidateForm.address"
+              :fetch-suggestions="querySearch"
+              placeholder="请输入内容"
+              :trigger-on-focus="false"
+            ></el-autocomplete>
           </el-form-item>
           <el-form-item>
             <el-button type="warning" @click="submitForm('numberValidateForm')">添加</el-button>
@@ -55,7 +60,25 @@ import { getAllAddress,addAddress,delAddress,selectAddress,checkAddress } from '
         }
       };
     },
-    methods: {
+    methods: { 
+      querySearch(queryString, cb) {
+        var restaurants = this.restaurants;
+        let results=[];
+        let address = this.numberValidateForm.address;
+        let param = {
+             name:address
+        }
+        let addressObject = {
+              pagesize:15,
+              pagenum: 0, 
+              orand: "OR", 
+              filter:[param]
+        }
+        checkAddress(addressObject).then(res =>{
+            results =res.data.data.map(function(addres){return {value:addres.name};});
+            cb(results);
+        })
+      },
       deleteAddress(param){
         	this.$confirm('确认删除该地址吗?', '提示', {
 					type: 'warning'
@@ -98,12 +121,12 @@ import { getAllAddress,addAddress,delAddress,selectAddress,checkAddress } from '
                     return ''
                   }
                   else{
-                    if (valid) {
+                    if (address!=='') {
                       this.upaddress(address);
                     }
                   }
               }else{
-                if (valid) {
+                if (address!=='') {
                       this.upaddress(address);
                 }
               }  

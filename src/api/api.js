@@ -29,3 +29,6 @@ export const selectOrder = params => { return axios.get(`${base}/selectOrder`,{p
 export const selectUser = params => { return axios.get(`${base}/selectUser`,{params:params})};
 
 export const checkAddress = params => { return axios.post('http://www.cgn.ac.cn/webapi/resourcedm/getdmq',params)};
+
+//http://www.cgn.ac.cn/webapi/resourcedm/getdmq
+//http://restapi.amap.com/v3/assistant/inputtips
