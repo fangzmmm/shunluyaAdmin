@@ -55,10 +55,7 @@
 				loading: false,
 				orders: [
 				],
-				 options: [{
-          value: 'UserId',
-          label: '用户id'
-        }, {
+				 options: [ {
           value: 'StartId',
           label: '起始点'
         }, {
