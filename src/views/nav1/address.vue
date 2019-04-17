@@ -134,7 +134,9 @@ import { getAllAddress,addAddress,delAddress,selectAddress,checkAddress } from '
         });
       },
       upaddress(address){
-        addAddress({address:address}).then(res=>{
+         var params = new URLSearchParams();
+        params.append('address',address);
+        addAddress(params).then(res=>{
                         if(res.data == 1){
                           this.$message({
                             message: '添加成功',
@@ -150,12 +152,14 @@ import { getAllAddress,addAddress,delAddress,selectAddress,checkAddress } from '
                       })
       },
       selectForm(formName) {
+         var params = new URLSearchParams();
          let address = this.numberValidateForm.address;
          if(address == ''){
            this.getAddress();
            return;
          }
-          selectAddress({address:address}).then(res=>{
+         params.append('address',address);
+          selectAddress(params).then(res=>{
             this.address = res.data.address;
         })
       }

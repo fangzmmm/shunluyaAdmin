@@ -60,8 +60,9 @@
 		},
 		methods: {
 			findUser(){
-
-				selectUser({'username':this.filters.name}).then(res =>{
+				var params = new URLSearchParams();
+				params.append('username',this.filters.name);
+				selectUser(params).then(res =>{
 						this.users = res.data.User;
 				})
 			},
